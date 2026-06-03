@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">AI Mail Intelligence</div>
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/mails">Mail Dashboard</a></li>
+        <li><a href="/tasks">Task Dashboard</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="page-container">
+
+<h1>Task Dashboard</h1>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Priority</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for task in tasks %}
+
+        <tr>
+            <td>{{ task.task_title }}</td>
+
+            <td>
+                <span class="badge {{ task.priority }}">
+                    {{ task.priority }}
+                </span>
+            </td>
+
+            <td>{{ task.deadline }}</td>
+            <td>{{ task.status }}</td>
+
+            <td>
+                <a href="/complete-task/{{ task.id }}" class="complete-btn">
+                    Complete
+                </a>
+
+                <a href="/delete-task/{{ task.id }}" class="delete-btn">
+                    Delete
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>

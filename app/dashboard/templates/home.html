@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Email Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">AI Mail Intelligence</div>
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/mails">Mail Dashboard</a></li>
+        <li><a href="/tasks">Task Dashboard</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+
+    <h1>AI-Powered Email Monitoring System</h1>
+
+    <p>
+        Automatically detect important emails,
+        extract deadlines,
+        generate tasks,
+        and manage productivity intelligently.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="/mails" class="btn">Open Mail Dashboard</a>
+        <a href="/tasks" class="btn secondary">View Tasks</a>
+    </div>
+
+</section>
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+        <h2>{{ total_emails }}</h2>
+        <p>Total Emails</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ important_emails }}</h2>
+        <p>Important Emails</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ pending_tasks }}</h2>
+        <p>Pending Tasks</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ completed_tasks }}</h2>
+        <p>Completed Tasks</p>
+    </div>
+
+</section>
+
+<section class="features">
+
+    <div class="feature-card">
+        <h3>Smart Priority Detection</h3>
+        <p>Detects important emails using NLP-inspired scoring logic.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Deadline Extraction</h3>
+</html>

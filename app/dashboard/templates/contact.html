@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">AI Mail Intelligence</div>
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/mails">Mail Dashboard</a></li>
+        <li><a href="/tasks">Task Dashboard</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="contact-container">
+
+    <h1>Contact & Feedback</h1>
+
+    <form>
+
+        <input type="text" placeholder="Your Name">
+
+        <input type="email" placeholder="Your Email">
+
+        <textarea placeholder="Your Feedback"></textarea>
+
+        <button type="submit">Send Feedback</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
