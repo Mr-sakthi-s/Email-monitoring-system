@@ -1,69 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mail Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-
-<nav>
-    <div class="logo">AI Mail Intelligence</div>
-
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/mails">Mail Dashboard</a></li>
-        <li><a href="/tasks">Task Dashboard</a></li>
-        <li><a href="/contact">Contact</a></li>
-    </ul>
-</nav>
-
+{% extends "base.html" %}
+{% block title %}Mail Dashboard{% endblock %}
+{% block content %}
 <div class="page-container">
-
-<h1>Mail Dashboard</h1>
-
-<div class="top-bar">
-    <a href="/fetch-emails" class="fetch-btn">
-        Fetch New Emails
-    </a>
+    <div class="page-heading">
+        <div><p class="eyebrow">INBOX INTELLIGENCE</p><h1>Mail Dashboard</h1><p class="page-subtitle">Review, prioritize, and act on messages from your connected accounts.</p></div>
+        <a href="/fetch-emails" class="fetch-btn"><span aria-hidden="true">+</span> Fetch Emails</a>
+    </div>
+    <div class="top-bar">
+        <form method="GET" action="/mails" class="filter-form">
+            <label>Email Account<select name="account"><option value="">All accounts</option>{% for account in connected_emails %}<option value="{{ account.id }}" {% if request.args.get('account', type=int) == account.id %}selected{% endif %}>{{ account.email_address }}</option>{% endfor %}</select></label>
+            <label>Importance<select name="filter"><option value="all">All messages</option><option value="important" {% if request.args.get('filter') == 'important' %}selected{% endif %}>Important</option><option value="spam" {% if request.args.get('filter') == 'spam' %}selected{% endif %}>Spam</option></select></label>
+            <label>Sort by<select name="sort"><option value="date">Newest</option><option value="deadline" {% if request.args.get('sort') == 'deadline' %}selected{% endif %}>Deadline</option></select></label>
+            <button type="submit">Apply filters</button>
+        </form>
+    </div>
+    <div class="data-panel">
+        <div class="table-scroll"><table class="data-table mail-table"><thead><tr><th>Sender</th><th>Receiver</th><th>Subject</th><th>Importance</th><th>Deadline</th><th>Received Date</th><th>Source Account</th></tr></thead><tbody>
+            {% for email in emails %}<tr><td class="primary-cell">{{ email.sender }}</td><td>{{ email.receiver or "Unknown" }}</td><td class="subject-cell">{{ email.subject }}</td><td>{% if email.is_important == 1 %}<span class="badge high">Important</span>{% else %}<span class="badge low">Normal</span>{% endif %}</td><td>{{ email.deadline or "None" }}</td><td>{{ email.received_at or "Unknown" }}</td><td>{% for account in connected_emails %}{% if account.id == email.connected_email_id %}{{ account.email_address }}{% endif %}{% else %}Unknown{% endfor %}</td></tr>{% else %}<tr><td colspan="7" class="empty-state">No emails found for these filters.</td></tr>{% endfor %}
+        </tbody></table></div>
+    </div>
 </div>
-
-<table>
-
-    <thead>
-        <tr>
-            <th>Sender</th>
-            <th>Subject</th>
-            <th>Important</th>
-            <th>Deadline</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        {% for email in emails %}
-
-        <tr>
-            <td>{{ email.sender }}</td>
-            <td>{{ email.subject }}</td>
-
-            <td>
-                {% if email.is_important == 1 %}
-                    <span class="badge high">Important</span>
-                {% else %}
-                    <span class="badge low">Normal</span>
-                {% endif %}
-            </td>
-
-            <td>{{ email.deadline }}</td>
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-
-</table>
-
-</div>
-
-</body>
-</html>
+{% endblock %}

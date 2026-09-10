@@ -1,39 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contact</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-
-<nav>
-    <div class="logo">AI Mail Intelligence</div>
-
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/mails">Mail Dashboard</a></li>
-        <li><a href="/tasks">Task Dashboard</a></li>
-        <li><a href="/contact">Contact</a></li>
-    </ul>
-</nav>
-
-<div class="contact-container">
-
-    <h1>Contact & Feedback</h1>
-
-    <form>
-
-        <input type="text" placeholder="Your Name">
-
-        <input type="email" placeholder="Your Email">
-
-        <textarea placeholder="Your Feedback"></textarea>
-
-        <button type="submit">Send Feedback</button>
-
-    </form>
-
-</div>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Contact | AI Mail Intelligence{% endblock %}
+{% block content %}
+<div class="contact-container"><div class="page-heading"><div><p class="eyebrow">GET IN TOUCH</p><h1>Contact & Feedback</h1><p class="page-subtitle">Have an idea, found an issue, or want to talk about the project?</p></div></div><div class="contact-layout"><section class="info-panel"><h3><span class="ui-icon" aria-hidden="true">ID</span>Developer Information</h3><p><strong>Sakthimurugan S</strong></p><p>AI &amp; Data Science Student</p><p><a href="mailto:sakthimurugan050806@gmail.com">@ sakthimurugan050806@gmail.com</a></p>
+    <p><a href="https://github.com/Mr-sakthi-s" target="_blank" rel="noopener">GitHub ↗</a></p>
+    <p><a href="https://www.linkedin.com/in/mr-sakthimurugan-s" target="_blank" rel="noopener">LinkedIn ↗</a></p></section><section class="info-panel"><form method="POST" action="/contact"><input type="text" name="name" placeholder="Your Name" required><input type="email" name="email" placeholder="Your Email" required><input type="text" name="subject" placeholder="Subject" required><textarea name="message" placeholder="Your Feedback" required></textarea><button type="submit">Send feedback</button></form></section></div></div>
+{% endblock %}

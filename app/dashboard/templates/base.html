@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}AI Mail Intelligence{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <a class="brand" href="/" aria-label="AI Mail Intelligence home">
+        <span class="logo-mark" aria-hidden="true"><span class="logo-envelope"></span><span class="logo-m">M</span></span>
+        <span class="logo">AI Mail Intelligence</span>
+    </a>
+    <ul>
+        <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+        <li><a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About</a></li>
+        {% if is_logged_in %}
+            <li><a href="/mails" class="{% if request.path == '/mails' %}active{% endif %}">Mail Dashboard</a></li>
+            <li><a href="/tasks" class="{% if request.path == '/tasks' %}active{% endif %}">Task Dashboard</a></li>
+            <li><a href="/connected-emails" class="{% if request.path == '/connected-emails' %}active{% endif %}">Connected Emails</a></li>
+            <li><a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">Contact</a></li>
+            <li><a href="/logout" onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
+        {% else %}
+            <li><a href="/login" class="{% if request.path == '/login' %}active{% endif %}">Login</a></li>
+            <li><a href="/register" class="{% if request.path == '/register' %}active{% endif %}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-container page-container">
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+</body>
+</html>

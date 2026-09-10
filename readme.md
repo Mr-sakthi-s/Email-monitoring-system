@@ -14,8 +14,10 @@ The system also provides a modern dashboard where users can view emails, monitor
 
 ## Email Fetching
 
-- Connects to Gmail using IMAP
-- Fetches recent emails
+- Authenticates website users with a username and password.
+- Lets each user connect multiple email accounts with mailbox credentials.
+- Fetches each connected account through IMAP and stores data with user ownership.
+
 - Skips already fetched emails using unique email IDs
 
 ## Importance Detection
@@ -76,6 +78,7 @@ Email_Monitoring/
 │   ├── dashboard/
 │   ├── database/
 │   ├── fetcher/
+│   │   └── gmail_fetcher.py
 │   ├── processor/
 │   ├── scheduler/
 │   ├── static/
@@ -102,9 +105,9 @@ Flask Route Triggered
         ↓
 Pipeline Starts
         ↓
-Connect Gmail
+Connected Account Credentials
         ↓
-Fetch Recent Emails
+Fetch IMAP Messages From Each Account
         ↓
 Analyze Importance
         ↓
