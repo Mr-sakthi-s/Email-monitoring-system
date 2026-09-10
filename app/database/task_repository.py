@@ -1,38 +1,28 @@
 import sqlite3
 
-
-DB_PATH = "data/emails.db"
+from app.database.db import get_connection
 
 
 def save_task(task):
-
-    conn = sqlite3.connect(DB_PATH)
-
+    conn = get_connection()
     cursor = conn.cursor()
 
     try:
-
-        # CHECK EXISTING TASK TITLE
         cursor.execute(
             """
             SELECT id
             FROM tasks
             WHERE LOWER(task_title) = LOWER(?)
+            AND user_id = ?
             """,
-            (task["title"],)
+            (task["title"], task.get("user_id")),
         )
 
         existing_task = cursor.fetchone()
-
         if existing_task:
-            print(
-                f"Task already exists: "
-                f"{task['title']}"
-            )
-            conn.close()
+            print(f"Task already exists: {task['title']}")
             return
 
-        # INSERT NEW TASK
         cursor.execute(
             """
             INSERT INTO tasks (
@@ -40,34 +30,29 @@ def save_task(task):
                 task_title,
                 priority,
                 deadline,
-                status
+                status,
+                user_id
             )
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
             (
                 task["email_uid"],
                 task["title"],
                 task["priority"],
                 task["deadline"],
-                task["status"]
-            )
+                task["status"],
+                task.get("user_id"),
+            ),
         )
 
         conn.commit()
-
         print(f"Task Saved: {task['title']}")
 
     except sqlite3.IntegrityError:
-
-        print(
-            f"Skipped duplicate task: "
-            f"{task['title']}"
-        )
+        print(f"Skipped duplicate task: {task['title']}")
 
     except Exception as e:
-
         print(f"Task insert failed: {e}")
 
     finally:
-
         conn.close()
